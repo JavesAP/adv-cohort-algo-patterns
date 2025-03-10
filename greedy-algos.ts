@@ -5,8 +5,18 @@
 // A child will be content if they receive a cookie with a size greater than or equal to their greed factor.
 // You can assign at most one cookie per child using a greedy approach.
 
-function findContentChildren(g, s) {
-  // Implement greedy logic
+function findContentChildren(g: number[], s: number[]) {
+  if (!g[0]) return "No Children"
+  
+  let content = 0
+  const sortedChildren = g.sort((a,b) => b - a)
+  const sortedCookies = s.sort((a,b) => b - a)
+  for (let i = 0; i <= g.length; i++) {
+    if (sortedChildren[i] <= sortedCookies[content]) {
+      content++
+    }
+  }
+  return content
 }
 
 // Test Cases

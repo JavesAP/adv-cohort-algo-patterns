@@ -1,8 +1,20 @@
 // 1. Remove Duplicates from Sorted Array (Easy)
 // Given a sorted array, remove the duplicates in-place such that each element appears only once.
 // Return the new length of the array.
-function removeDuplicates(nums) {
+function removeDuplicates(nums: number[]) {
   // Implement the logic using two pointers
+  let target = 0, pointer = 1
+  for (const num of nums) {
+    //console.log(target, pointer)
+    if (nums[pointer] !== nums[target]) {
+      if (pointer - 1 === target) {
+        if (pointer + 1 < nums.length) target += 1, pointer += 1
+      }
+    } else if (nums[pointer] === nums[target]){
+      nums.splice(pointer, 1)
+    }
+  }
+  return nums
 }
 // Test Cases
 console.log(removeDuplicates([1, 1, 2, 3, 3, 4])); // Normal Case: [1, 2, 3, 4]
@@ -10,8 +22,17 @@ console.log(removeDuplicates([])); // Edge Case: Empty array
 
 // 2. Two Sum II - Input Array is Sorted (Easy)
 // Given a sorted array and a target number, return indices of the two numbers that add up to target.
-function twoSumSorted(nums, target) {
+function twoSumSorted(nums: number[], target: number) {
   // Implement two pointers logic
+  let leftPointer = 0, rightPointer = nums.length - 1
+  for (const num of nums) {
+    if (nums[leftPointer] + nums[rightPointer] === target) return [leftPointer, rightPointer]
+    if (leftPointer + 1 !== rightPointer || leftPointer !== rightPointer) {
+      if (nums[rightPointer] > target) rightPointer -= 1
+      else leftPointer += 1
+    }
+  }
+  return 'No valid pairs'
 }
 // Test Cases
 console.log(twoSumSorted([2, 7, 11, 15], 9)); // Normal Case: [0, 1]
