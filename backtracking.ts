@@ -27,8 +27,42 @@ console.log(combinationSum([2, 4], 7)); // Edge Case: No valid combinations
 
 // 4. Word Search (Medium)
 // Given an m x n grid of letters and a word, check if the word exists in the grid using adjacent letters.
-function exist(board, word) {
+function exist(board: string[][], word: string) {
   // Implement backtracking logic
+  const columns = board[0].length
+  const rows = board.length
+  let boolean = false
+  
+  const directionsToCheck = {
+    up: [-1, 0],
+    down: [1, 0],
+    right: [0, 1],
+    left: [0, -1],
+    upperRight: [-1, 1],
+    upperLeft: [-1, -1],
+    lowerRight: [1, 1],
+    lowerLeft: [1, -1],
+  }
+  
+  function dfs(row, col, index = 0) {
+    if (!board[row][col]) return 
+    if (index === word.length) return true
+    
+    if (board[row][col] === word[index]) {
+      Object.entries(directionsToCheck).forEach((entry) => {
+        const [direction, [x, y]] = entry
+        return dfs(row + x, col + y, index + 1)
+      })
+    } else return false 
+  }
+  
+  for (let i = 0; i <= rows; i++) {
+    for (let j = 0; j <= columns; j++) {
+      const check = dfs(i, j)
+      if (check === true) boolean = true
+    }
+  }
+  return boolean
 }
 // Test Cases
 console.log(
